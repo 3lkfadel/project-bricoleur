@@ -6,9 +6,6 @@ use App\Http\Controllers\PostsController;
 use App\Http\Controllers\CommentsController;
 use App\Http\Controllers\LikesController;
 
-Route::get('/index', function () {
-    return view('posts.index');
-});
 
 Route::get('/dashboard', function () {
     return view('dashboard');
@@ -50,6 +47,10 @@ Route::post('/posts', [PostsController::class, 'store'])
         Route::delete('posts/{post}/like', [LikesController::class, 'destroy'])->name('likes.destroy');
 
     });
+   // routes/web.php
+Route::get('/', [PostsController::class, 'welcome']);
+
+
 
     use App\Http\Controllers\ChatController;
 

@@ -9,7 +9,15 @@ use Illuminate\Support\Facades\Auth;
 class PostsController extends Controller
 {
     public function index()
+
     {
+        // Vérifie si l'utilisateur est authentifié
+        if (!Auth::check()) {
+            // Si non, redirige vers la page d'inscription
+            return redirect()->route('register')->with('message', 'Vous devez être inscrit pour accéder aux articles.');
+        }
+
+        // Sinon, récupère les articles
         $posts = Post::with(['user', 'comments', 'likes'])->latest()->get();
         return view('posts.index', compact('posts'));
     }
@@ -56,4 +64,14 @@ class PostsController extends Controller
         $post->delete();
         return redirect()->route('posts.index')->with('success', 'Post deleted successfully!');
     }
+
+
+    public function welcome()
+{
+    $posts = Post::with(['user', 'comments', 'likes'])->latest()->get(); // Récupère tous les posts
+    return view('welcome', compact('posts')); // Passe la variable $posts à la vue
+}
+
+
+
 }
